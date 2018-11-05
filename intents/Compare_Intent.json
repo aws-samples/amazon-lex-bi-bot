@@ -1,0 +1,333 @@
+{
+        "name": "Compare_Intent",
+        "description": "Recursively query the dataset",
+        "sampleUtterances": [
+            "Compare sales for {one_category} and {another_category} in {venue_city}",
+            "Compare sales in {one_state} and {another_state} in {event_month}",
+            "Compare sales in {one_month} and {another_month} in {venue_state}", 
+            "Compare sales at {one_venue} and {another_venue} for {cat_desc}", 
+            "Compare sales for {one_event} and {another_event} at {venue_name}",
+            "Compare sales for {one_event} and {another_event} in {venue_city}",
+
+            "Compare {one_category} versus {another_category}",
+            "Compare {one_state} versus {another_state}",
+            "Compare {one_city} versus {another_city}",
+            "Compare {one_month} versus {another_month}", 
+            "Compare {one_venue} versus {another_venue}", 
+            "Compare {one_event} versus {another_event}"
+        ], 
+        "conclusionStatement": {
+          "messages": [
+            {
+              "content": "via code hook",
+              "contentType": "PlainText"
+            }
+          ]
+        },
+        "fulfillmentActivity": {
+          "codeHook": {
+            "messageVersion": "1.0",
+            "uri": "{{lambda-arn}}"
+          },
+          "type": "CodeHook"
+        },
+        "slots": [
+            {
+                "slotType": "AMAZON.Month", 
+                "name": "one_month", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "one event month", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 1, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.Month", 
+                "name": "another_month", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "another event month", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 2, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.MusicVenue", 
+                "name": "one_venue", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "one venue name", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 3, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.MusicVenue", 
+                "name": "another_venue", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "another venue name", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 4, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.US_CITY", 
+                "name": "one_city", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "one venue city", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 5, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.US_CITY", 
+                "name": "another_city", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "another venue city", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 6, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.US_STATE", 
+                "name": "one_state", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "one venue state", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 7, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.US_STATE", 
+                "name": "another_state", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "another venue state", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 8, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "event_name", 
+                "name": "one_event", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "one event name", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 9, 
+                "slotTypeVersion": "$LATEST", 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "event_name", 
+                "name": "another_event", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "another event name", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 10, 
+                "slotTypeVersion": "$LATEST", 
+                "sampleUtterances": []
+            },
+            {
+                "slotType": "AMAZON.Month", 
+                "name": "event_month", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "event_month", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 11, 
+                "sampleUtterances": []
+            },
+            {
+                "slotType": "AMAZON.MusicVenue", 
+                "name": "venue_name", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "venue name", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 12, 
+                "sampleUtterances": []
+            }, 
+            {
+                "slotType": "AMAZON.US_CITY", 
+                "name": "venue_city", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "venue_city", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 13, 
+                "sampleUtterances": []
+            },
+            {
+                "slotType": "AMAZON.US_STATE", 
+                "name": "venue_state", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "venue_state", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 14, 
+                "sampleUtterances": []
+            },
+            {
+                "slotType": "cat_desc", 
+                "name": "one_category", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "The type of event", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 15, 
+                "slotTypeVersion": "$LATEST", 
+                "sampleUtterances": [], 
+                "description": "cat_desc"
+            },
+            {
+                "slotType": "cat_desc", 
+                "name": "another_category", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "The type of event", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 16, 
+                "slotTypeVersion": "$LATEST", 
+                "sampleUtterances": [], 
+                "description": "cat_desc"
+            },
+            {
+                "slotType": "cat_desc", 
+                "name": "cat_desc", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "The type of event", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 17, 
+                "slotTypeVersion": "$LATEST", 
+                "sampleUtterances": [], 
+                "description": "cat_desc"
+            },
+            {
+                "slotType": "event_name", 
+                "name": "event_name", 
+                "slotConstraint": "Optional", 
+                "valueElicitationPrompt": {
+                    "maxAttempts": 2, 
+                    "messages": [
+                        {
+                            "content": "event name", 
+                            "contentType": "PlainText"
+                        }
+                    ]
+                }, 
+                "priority": 18, 
+                "slotTypeVersion": "$LATEST", 
+                "sampleUtterances": []
+            } 
+        ]
+}

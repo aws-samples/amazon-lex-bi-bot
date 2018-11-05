@@ -1,0 +1,128 @@
+{
+    "name": "Switch_Intent",
+    "description": "Change the latest dimension value",
+    "sampleUtterances": [
+      "And for {cat_desc}",
+      "How about  in {venue_city} {venue_state}", 
+      "How about in {venue_city}", 
+      "What about in {venue_state}", 
+      "And in {event_month}", 
+      "How about at {venue_name}", 
+      "What about for {event_name}"
+    ],
+    "slots": [
+        {
+            "slotType": "event_name", 
+            "name": "event_name", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "event name", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 1, 
+            "slotTypeVersion": "$LATEST", 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.Month", 
+            "name": "event_month", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "event_month", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 2, 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.MusicVenue", 
+            "name": "venue_name", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "venue_name", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 3, 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.US_CITY", 
+            "name": "venue_city", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "venue_city", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 4, 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.US_STATE", 
+            "name": "venue_state", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "venue_state", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 5, 
+            "sampleUtterances": []
+        },
+        {
+            "slotType": "cat_desc", 
+            "name": "cat_desc", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "category", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 6, 
+            "slotTypeVersion": "$LATEST", 
+            "sampleUtterances": []
+        }
+    ],
+    "fulfillmentActivity": {
+        "type": "CodeHook", 
+        "codeHook": {
+            "uri": "{{lambda-arn}}", 
+            "messageVersion": "1.0"
+        }
+    }, 
+    "conclusionStatement": {
+      "messages": [
+        {
+          "content": "via code hook",
+          "contentType": "PlainText"
+        }
+      ]
+    }
+}

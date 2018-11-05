@@ -1,0 +1,9 @@
+{
+        "name": "event_name",
+        "description": "Names of events in TICKIT database",
+        "valueSelectionStrategy": "TOP_RESOLUTION", 
+        "enumerationValues": [
+           { "value": "Sample Event 1" },
+           { "value": "Another Sample Event" }
+	 ]
+}

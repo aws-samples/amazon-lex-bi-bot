@@ -1,0 +1,48 @@
+{
+    "name": "dimensions", 
+    "description": "List of dimensions in ticket database",
+    "valueSelectionStrategy": "TOP_RESOLUTION", 
+    "enumerationValues": [
+        {
+            "synonyms": [
+                "month"
+            ], 
+            "value": "months"
+        }, 
+        {
+            "synonyms": [
+                "city"
+            ], 
+            "value": "cities"
+        }, 
+        {
+            "synonyms": [
+                "stadiums", 
+                "locations", 
+                "venue"
+            ], 
+            "value": "venues"
+        }, 
+        {
+            "synonyms": [
+                "category"
+            ], 
+            "value": "categories"
+        }, 
+        {
+            "synonyms": [
+                "shows", 
+                "concerts", 
+                "event"
+            ], 
+            "value": "events"
+        }, 
+        {
+            "synonyms": [
+                "state"
+            ], 
+            "value": "states"
+        }
+    ]
+}
+

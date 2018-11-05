@@ -1,0 +1,43 @@
+{
+        "name": "Goodbye_Intent",
+        "description": "Let Jasper know you're done",
+        "conclusionStatement": {
+          "messages": [
+            {
+              "content": "via code hook",
+              "contentType": "PlainText"
+            }
+          ]
+        },
+        "fulfillmentActivity": {
+          "codeHook": {
+            "messageVersion": "1.0",
+            "uri": "{{lambda-arn}}"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "all set",
+          "all set thanks",
+          "bye now",
+          "bye",
+          "catch you later",
+          "catch ya later",
+          "cool thanks",
+          "good job jasper",
+          "i'm done",
+          "i'm finished",
+          "ok thank you",
+          "ok thanks",
+          "thank you",
+          "thanks",
+          "thanks bro",
+          "thanks dude",
+          "thanks jasper",
+          "you're the best",
+          "see ya",
+          "see you later"
+        ],
+        "slots": [
+        ]
+}

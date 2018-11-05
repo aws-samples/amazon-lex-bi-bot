@@ -1,0 +1,63 @@
+{
+  "name": "Jasper",
+  "description": "Jasper - a SQL query bot for the TICKIT database",
+  "intents": [
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Hello_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Top_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Compare_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+	    "intentName": "Count_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Switch_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Reset_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Refresh_Intent"
+        }, 
+        {
+            "intentVersion": "$LATEST", 
+            "intentName": "Goodbye_Intent"
+        }
+  ], 
+  "locale": "en-US",
+  "abortStatement": {
+    "messages": [
+      {
+        "content": "Sorry, I could not understand. Goodbye.",
+        "contentType": "PlainText"
+      }
+    ]
+  },
+  "childDirected": false,
+  "clarificationPrompt": {
+    "maxAttempts": 5,
+    "messages": [
+      {
+        "content": "Come again?",
+        "contentType": "PlainText"
+      },
+      {
+        "content": "Sorry, can you please repeat that?",
+        "contentType": "PlainText"
+      }
+    ]
+  },
+  "idleSessionTTLInSeconds": 300,
+  "voiceId": "Matthew"
+}

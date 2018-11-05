@@ -1,0 +1,131 @@
+{
+    "name": "Reset_Intent",
+    "description": "Tell Jasper to start over",
+    "sampleUtterances": [
+      "Forget {venue_city} Jasper", 
+      "Forget about {venue_state}", 
+      "Reset {event_month}", 
+      "Clear {venue_name}", 
+      "Clear {event_name}", 
+      "Forget the {dimension}", 
+      "Start over", 
+      "Reset everything",
+      "Reset"
+    ],
+    "slots": [
+        {
+            "slotType": "dimensions", 
+            "name": "dimension", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "dimension", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 1, 
+            "slotTypeVersion": "$LATEST", 
+            "sampleUtterances": []
+        },
+        {
+            "slotType": "AMAZON.Month", 
+            "name": "event_month", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "event_month", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 2, 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.MusicVenue", 
+            "name": "venue_name", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "venue_name", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 3, 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.US_CITY", 
+            "name": "venue_city", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "venue_city", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 4, 
+            "sampleUtterances": []
+        }, 
+        {
+            "slotType": "AMAZON.US_STATE", 
+            "name": "venue_state", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "venue_state", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 5, 
+            "sampleUtterances": []
+        },
+        {
+            "slotType": "event_name", 
+            "name": "event_name", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "The name of the event", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 6, 
+            "slotTypeVersion": "$LATEST", 
+            "sampleUtterances": [], 
+            "description": "event_name"
+        }
+    ],
+    "fulfillmentActivity": {
+        "type": "CodeHook", 
+        "codeHook": {
+            "uri": "{{lambda-arn}}", 
+            "messageVersion": "1.0"
+        }
+    }, 
+    "conclusionStatement": {
+      "messages": [
+        {
+          "content": "via code hook",
+          "contentType": "PlainText"
+        }
+      ]
+    }
+}

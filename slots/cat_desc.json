@@ -1,0 +1,12 @@
+{
+        "name": "cat_desc",
+        "description": "Categories of events in the TICKIT database",
+        "valueSelectionStrategy": "ORIGINAL_VALUE", 
+        "enumerationValues": [
+           { "value": "Musical theatre" },
+           { "value": "All non-musical theatre" },
+           { "value": "All opera and light opera" },
+           { "value": "All rock and pop music concerts" }
+	 ]
+}
+

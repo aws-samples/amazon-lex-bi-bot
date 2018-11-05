@@ -1,0 +1,28 @@
+{
+        "name": "Refresh_Intent",
+        "description": "Refresh dimesions from the database",
+        "conclusionStatement": {
+          "messages": [
+            {
+              "content": "via code hook",
+              "contentType": "PlainText"
+            }
+          ]
+        },
+        "fulfillmentActivity": {
+          "codeHook": {
+            "messageVersion": "1.0",
+            "uri": "{{lambda-arn}}"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "refresh",
+          "refresh your data",
+          "refresh the dimensions",
+          "refresh dimensions",
+          "refresh your data Jasper"
+        ],
+        "slots": [
+        ]
+}
