@@ -13,9 +13,9 @@
 import time
 import logging
 import json
-import jasper_config as jasper
-import jasper_helpers as helpers
-import jasper_userexits as userexits
+import bibot_config as bibot
+import bibot_helpers as helpers
+import bibot_userexits as userexits
 
 #
 # See additional configuration parameters at bottom 
@@ -41,12 +41,12 @@ logger.setLevel(logging.DEBUG)
 
 
 def lambda_handler(event, context):
-    logger.debug('<<Jasper>> Lex event info = ' + json.dumps(event))
+    logger.debug('<<BIBot>> Lex event info = ' + json.dumps(event))
 
     session_attributes = event['sessionAttributes']
-    logger.debug('<<Jasper>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
+    logger.debug('<<BIBot>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
 
-    config_error = helpers.get_jasper_config()
+    config_error = helpers.get_bibot_config()
     if config_error is not None:
         return helpers.close(session_attributes, 'Fulfilled',
             {'contentType': 'PlainText', 'content': config_error})   
@@ -57,7 +57,7 @@ def lambda_handler(event, context):
 def compare_intent_handler(intent_request, session_attributes):
     method_start = time.perf_counter()
     
-    logger.debug('<<Jasper>> compare_intent_handler: session_attributes = ' + json.dumps(session_attributes))
+    logger.debug('<<BIBot>> compare_intent_handler: session_attributes = ' + json.dumps(session_attributes))
 
     session_attributes['greetingCount'] = '1'
     session_attributes['resetCount'] = '0'
@@ -69,14 +69,14 @@ def compare_intent_handler(intent_request, session_attributes):
     
     try:
         slot_values = helpers.get_slot_values(slot_values, intent_request)
-    except jasper.SlotError as err:
+    except bibot.SlotError as err:
         return helpers.close(session_attributes, 'Fulfilled', {'contentType': 'PlainText','content': str(err)})   
         
-    logger.debug('<<Jasper>> "count_intent_handler(): slot_values: %s', slot_values)
+    logger.debug('<<BIBot>> "count_intent_handler(): slot_values: %s', slot_values)
 
     # Retrieve "remembered" slot values from session attributes
     slot_values = helpers.get_remembered_slot_values(slot_values, session_attributes)
-    logger.debug('<<Jasper>> "count_intent_handler(): slot_values afer get_remembered_slot_values: %s', slot_values)
+    logger.debug('<<BIBot>> "count_intent_handler(): slot_values afer get_remembered_slot_values: %s', slot_values)
 
     # Remember updated slot values
     helpers.remember_slot_values(slot_values, session_attributes)
@@ -87,7 +87,7 @@ def compare_intent_handler(intent_request, session_attributes):
                 return helpers.close(session_attributes, 'Fulfilled', {'contentType': 'PlainText', 'content': config['error'] })
             
             slot_values['dimension'] = key
-            slot_values[jasper.DIMENSIONS[key]['slot']] = None
+            slot_values[bibot.DIMENSIONS[key]['slot']] = None
             
             the_1st_dimension_value = slot_values[config['1st']].lower()
             the_2nd_dimension_value = slot_values[config['2nd']].lower()
@@ -95,28 +95,28 @@ def compare_intent_handler(intent_request, session_attributes):
             break
 
     # Build and execute query
-    select_clause = COMPARE_SELECT.format(jasper.DIMENSIONS[slot_values['dimension']]['column'])
+    select_clause = COMPARE_SELECT.format(bibot.DIMENSIONS[slot_values['dimension']]['column'])
     where_clause = COMPARE_JOIN
 
-    the_1st_dimension_value = userexits.pre_process_query_value(jasper.DIMENSIONS[key]['slot'], the_1st_dimension_value)
-    the_2nd_dimension_value = userexits.pre_process_query_value(jasper.DIMENSIONS[key]['slot'], the_2nd_dimension_value)
-    where_clause += "   AND (LOWER(" + jasper.DIMENSIONS[slot_values['dimension']]['column'] + ") LIKE LOWER('%" + the_1st_dimension_value + "%') OR "
-    where_clause +=         "LOWER(" + jasper.DIMENSIONS[slot_values['dimension']]['column'] + ") LIKE LOWER('%" + the_2nd_dimension_value + "%')) " 
+    the_1st_dimension_value = userexits.pre_process_query_value(bibot.DIMENSIONS[key]['slot'], the_1st_dimension_value)
+    the_2nd_dimension_value = userexits.pre_process_query_value(bibot.DIMENSIONS[key]['slot'], the_2nd_dimension_value)
+    where_clause += "   AND (LOWER(" + bibot.DIMENSIONS[slot_values['dimension']]['column'] + ") LIKE LOWER('%" + the_1st_dimension_value + "%') OR "
+    where_clause +=         "LOWER(" + bibot.DIMENSIONS[slot_values['dimension']]['column'] + ") LIKE LOWER('%" + the_2nd_dimension_value + "%')) " 
 
-    logger.debug('<<Jasper>> compare_sales_intent_request - building WHERE clause') 
-    for dimension in jasper.DIMENSIONS:
-        slot_key = jasper.DIMENSIONS.get(dimension).get('slot')
+    logger.debug('<<BIBot>> compare_sales_intent_request - building WHERE clause') 
+    for dimension in bibot.DIMENSIONS:
+        slot_key = bibot.DIMENSIONS.get(dimension).get('slot')
         if slot_values[slot_key] is not None:
-            logger.debug('<<Jasper>> compare_sales_intent_request - calling userexits.pre_process_query_value(%s, %s)', 
+            logger.debug('<<BIBot>> compare_sales_intent_request - calling userexits.pre_process_query_value(%s, %s)', 
                          slot_key, slot_values[slot_key])  
             value = userexits.pre_process_query_value(slot_key, slot_values[slot_key])
-            where_clause += COMPARE_WHERE.format(jasper.DIMENSIONS.get(dimension).get('column'), value)
+            where_clause += COMPARE_WHERE.format(bibot.DIMENSIONS.get(dimension).get('column'), value)
 
-    order_by_group_by = COMPARE_ORDERBY.format(jasper.DIMENSIONS[slot_values['dimension']]['column'])
+    order_by_group_by = COMPARE_ORDERBY.format(bibot.DIMENSIONS[slot_values['dimension']]['column'])
 
     query_string = select_clause + where_clause + order_by_group_by
     
-    logger.debug('<<Jasper>> Athena Query String = ' + query_string)  
+    logger.debug('<<BIBot>> Athena Query String = ' + query_string)  
     
     response = helpers.execute_athena_query(query_string)
 
@@ -126,9 +126,9 @@ def compare_intent_handler(intent_request, session_attributes):
 
     # add the English versions of the WHERE clauses
     counter = 0
-    for dimension in jasper.DIMENSIONS:
-        slot_key = jasper.DIMENSIONS[dimension].get('slot')
-        logger.debug('<<Jasper>> pre compare_sale_formatter[%s] = %s', slot_key, slot_values.get(slot_key))
+    for dimension in bibot.DIMENSIONS:
+        slot_key = bibot.DIMENSIONS[dimension].get('slot')
+        logger.debug('<<BIBot>> pre compare_sale_formatter[%s] = %s', slot_key, slot_values.get(slot_key))
         if slot_values.get(slot_key) is not None:
             # the DIMENSION_FORMATTERS perform a post-process function and then format the output
             # Example:  {... 'venue_state': {'format': ' in the state of {}',  'function': get_state_name}, ...}
@@ -139,7 +139,7 @@ def compare_intent_handler(intent_request, session_attributes):
                 else:
                     response_string += ', ' + userexits.DIMENSION_FORMATTERS[slot_key]['format'].lower().format(output_text)
                 counter += 1
-                logger.debug('<<Jasper>> compare_sales_formatter[%s] = %s', slot_key, output_text)
+                logger.debug('<<BIBot>> compare_sales_formatter[%s] = %s', slot_key, output_text)
 
     if (result_count == 0):
         if len(response_string) > 0:
@@ -153,7 +153,7 @@ def compare_intent_handler(intent_request, session_attributes):
             response_string += ', there '
         else:
             response_string += 'There '
-        response_string += 'is only one ' + jasper.DIMENSIONS[slot_values['dimension']]['singular'] + '.'
+        response_string += 'is only one ' + bibot.DIMENSIONS[slot_values['dimension']]['singular'] + '.'
         
     elif (result_count == 2):
         # put the results into a dict for easier reference by name
@@ -165,7 +165,7 @@ def compare_intent_handler(intent_request, session_attributes):
                              response['ResultSet']['Rows'][2]['Data'][0]['VarCharValue'],  
                              float(response['ResultSet']['Rows'][2]['Data'][1]['VarCharValue']) ] } )
 
-        logger.debug('<<Jasper>> compare_intent_handler - result_set = %s', result_set) 
+        logger.debug('<<BIBot>> compare_intent_handler - result_set = %s', result_set) 
 
         the_1st_dimension_string = result_set[the_1st_dimension_value.lower()][0]
         the_1st_dimension_string = userexits.post_process_dimension_output(key, the_1st_dimension_string)
@@ -199,11 +199,11 @@ def compare_intent_handler(intent_request, session_attributes):
     else:  # >2, should not occur
         response_string = 'I seem to have a problem, I got back ' + str(result_count) + ' ' + dimension + '.'
     
-    logger.debug('<<Jasper>> response_string = ' + response_string) 
+    logger.debug('<<BIBot>> response_string = ' + response_string) 
 
     method_duration = time.perf_counter() - method_start
     method_duration_string = 'method time = %.0f' % (method_duration * 1000) + ' ms'
-    logger.debug('<<Jasper>> "Method duration is: ' + method_duration_string) 
+    logger.debug('<<BIBot>> "Method duration is: ' + method_duration_string) 
 
     return helpers.close(session_attributes, 'Fulfilled', {'contentType': 'PlainText','content': response_string})   
 

@@ -13,9 +13,8 @@
 import time
 import logging
 import json
-import jasper_config as jasper
-import jasper_helpers as helpers
-import jasper_userexits as userexits
+import bibot_helpers as helpers
+import bibot_userexits as userexits
 import count_intent
 import top_intent
 
@@ -28,12 +27,12 @@ logger.setLevel(logging.DEBUG)
 
 
 def lambda_handler(event, context):
-    logger.debug('<<Jasper>> Lex event info = ' + json.dumps(event))
+    logger.debug('<<BIBot>> Lex event info = ' + json.dumps(event))
 
     session_attributes = event['sessionAttributes']
-    logger.debug('<<Jasper>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
+    logger.debug('<<BIBot>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
 
-    config_error = helpers.get_jasper_config()
+    config_error = helpers.get_bibot_config()
     if config_error is not None:
         return helpers.close(session_attributes, 'Fulfilled',
             {'contentType': 'PlainText', 'content': config_error})   
@@ -50,8 +49,8 @@ def switch_intent_handler(intent_request, session_attributes):
     if session_attributes.get('lastIntent', None) is not None:
         intent_name = session_attributes['lastIntent']
         if INTENT_CONFIG.get(intent_name, False):
-            logger.debug('<<Jasper>> switch_intent_handler: session_attributes = ' + json.dumps(session_attributes))
-            logger.debug('<<Jasper>> switch_intent_handler: refirecting to ' + intent_name)
+            logger.debug('<<BIBot>> switch_intent_handler: session_attributes = ' + json.dumps(session_attributes))
+            logger.debug('<<BIBot>> switch_intent_handler: refirecting to ' + intent_name)
             return INTENT_CONFIG[intent_name]['handler'](intent_request, session_attributes)    # dispatch to the event handler
         else:
             return helpers.close(session_attributes, 'Fulfilled',

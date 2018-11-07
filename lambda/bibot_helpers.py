@@ -16,8 +16,8 @@ import logging
 import json
 import pprint
 import os
-import jasper_config as jasper
-import jasper_userexits as userexits
+import bibot_config as bibot
+import bibot_userexits as userexits
 
 #
 # See additional configuration parameters at bottom 
@@ -27,7 +27,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
-def get_jasper_config():
+def get_bibot_config():
     global ATHENA_DB
     global ATHENA_OUTPUT_LOCATION
 
@@ -37,8 +37,8 @@ def get_jasper_config():
     except KeyError:
         return 'I have a configuration error - please set up the Athena database information.'
 
-    logger.debug('<<Jasper>> athena_db = ' + ATHENA_DB)
-    logger.debug('<<Jasper>> athena_output_location = ' + ATHENA_OUTPUT_LOCATION)
+    logger.debug('<<BIBot>> athena_db = ' + ATHENA_DB)
+    logger.debug('<<BIBot>> athena_output_location = ' + ATHENA_OUTPUT_LOCATION)
 
 
 def execute_athena_query(query_string):
@@ -61,36 +61,36 @@ def execute_athena_query(query_string):
         response = athena.get_query_execution(QueryExecutionId=query_execution_id)
         status = response['QueryExecution']['Status']['State']
         if (status == 'RUNNING'):
-            #logger.debug('<<Jasper>> query status = ' + status + ': sleep 200ms') 
+            #logger.debug('<<BIBot>> query status = ' + status + ': sleep 200ms') 
             time.sleep(0.200)
 
     duration = time.perf_counter() - start
     duration_string = 'query duration = %.0f' % (duration * 1000) + ' ms'
-    logger.debug('<<Jasper>> query status = ' + status + ', ' + duration_string) 
+    logger.debug('<<BIBot>> query status = ' + status + ', ' + duration_string) 
 
     response = athena.get_query_results(QueryExecutionId=query_execution_id)
-    logger.debug('<<Jasper>> query response = ' + json.dumps(response)) 
+    logger.debug('<<BIBot>> query response = ' + json.dumps(response)) 
 
     return response
 
 
 def get_slot_values(slot_values, intent_request):
     if slot_values is None:
-        slot_values = {key: None for key in jasper.SLOT_CONFIG}
+        slot_values = {key: None for key in bibot.SLOT_CONFIG}
     
     slots = intent_request['currentIntent']['slots']
 
-    for key,config in jasper.SLOT_CONFIG.items():
+    for key,config in bibot.SLOT_CONFIG.items():
         slot_values[key] = slots.get(key)
-        logger.debug('<<Jasper>> retrieving slot value for %s = %s', key, slot_values[key])
+        logger.debug('<<BIBot>> retrieving slot value for %s = %s', key, slot_values[key])
         if slot_values[key]:
-            if config.get('type', jasper.ORIGINAL_VALUE) == jasper.TOP_RESOLUTION:
+            if config.get('type', bibot.ORIGINAL_VALUE) == bibot.TOP_RESOLUTION:
                 # get the resolved slot name of what the user said/typed
                 if len(intent_request['currentIntent']['slotDetails'][key]['resolutions']) > 0:
                     slot_values[key] = intent_request['currentIntent']['slotDetails'][key]['resolutions'][0]['value']
                 else:
-                    errorMsg = jasper.SLOT_CONFIG[key].get('error', 'Sorry, I don\'t understand "{}".')
-                    raise jasper.SlotError(errorMsg.format(slots.get(key)))
+                    errorMsg = bibot.SLOT_CONFIG[key].get('error', 'Sorry, I don\'t understand "{}".')
+                    raise bibot.SlotError(errorMsg.format(slots.get(key)))
                 
             slot_values[key] = userexits.post_process_slot_value(key, slot_values[key])
     
@@ -98,20 +98,20 @@ def get_slot_values(slot_values, intent_request):
 
 
 def get_remembered_slot_values(slot_values, session_attributes):
-    logger.debug('<<Jasper>> get_remembered_slot_values() - session_attributes: %s', session_attributes)
+    logger.debug('<<BIBot>> get_remembered_slot_values() - session_attributes: %s', session_attributes)
 
     str = session_attributes.get('rememberedSlots')
-    remembered_slot_values = json.loads(str) if str is not None else {key: None for key in jasper.SLOT_CONFIG}
+    remembered_slot_values = json.loads(str) if str is not None else {key: None for key in bibot.SLOT_CONFIG}
     
     if slot_values is None:
-        slot_values = {key: None for key in jasper.SLOT_CONFIG}
+        slot_values = {key: None for key in bibot.SLOT_CONFIG}
     
-    logger.debug('<<Jasper>> get_remembered_slot_values() - slot_values: %s', slot_values)
-    logger.debug('<<Jasper>> get_remembered_slot_values() - remembered_slot_values: %s', remembered_slot_values)
-    for key,config in jasper.SLOT_CONFIG.items():
+    logger.debug('<<BIBot>> get_remembered_slot_values() - slot_values: %s', slot_values)
+    logger.debug('<<BIBot>> get_remembered_slot_values() - remembered_slot_values: %s', remembered_slot_values)
+    for key,config in bibot.SLOT_CONFIG.items():
         if config.get('remember', False):
-            logger.debug('<<Jasper>> get_remembered_slot_values() - slot_values[%s] = %s', key, slot_values.get(key))
-            logger.debug('<<Jasper>> get_remembered_slot_values() - remembered_slot_values[%s] = %s', key, remembered_slot_values.get(key))
+            logger.debug('<<BIBot>> get_remembered_slot_values() - slot_values[%s] = %s', key, slot_values.get(key))
+            logger.debug('<<BIBot>> get_remembered_slot_values() - remembered_slot_values[%s] = %s', key, remembered_slot_values.get(key))
             if slot_values.get(key) is None:
                 slot_values[key] = remembered_slot_values.get(key)
                 
@@ -120,9 +120,9 @@ def get_remembered_slot_values(slot_values, session_attributes):
 
 def remember_slot_values(slot_values, session_attributes):
     if slot_values is None:
-        slot_values = {key: None for key,config in jasper.SLOT_CONFIG.items() if config['remember']}
+        slot_values = {key: None for key,config in bibot.SLOT_CONFIG.items() if config['remember']}
     session_attributes['rememberedSlots'] = json.dumps(slot_values)
-    logger.debug('<<Jasper>> Storing updated slot values: %s', slot_values)           
+    logger.debug('<<BIBot>> Storing updated slot values: %s', slot_values)           
     return slot_values
 
 
@@ -136,7 +136,7 @@ def close(session_attributes, fulfillment_state, message):
         }
     }
     
-    logger.debug('<<Jasper>> "Lambda fulfillment function response = \n' + pprint.pformat(response, indent=4)) 
+    logger.debug('<<BIBot>> "Lambda fulfillment function response = \n' + pprint.pformat(response, indent=4)) 
 
     return response
 

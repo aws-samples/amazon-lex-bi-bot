@@ -1,6 +1,6 @@
 {
-  "name": "Jasper",
-  "description": "Jasper - a SQL query bot for the TICKIT database",
+  "name": "BIBot",
+  "description": "BIBot - a SQL query bot for the TICKIT database",
   "intents": [
         {
             "intentVersion": "$LATEST", 

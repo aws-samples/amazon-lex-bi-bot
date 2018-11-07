@@ -26,7 +26,7 @@ do
     #     --function-name ${LAMBDA}_${i} \
     #     --description "${LAMBDA} ${i} Intent Handler" \
     #     --timeout 300 \
-    #     --zip-file fileb://Jasper_${i}.zip \
+    #     --zip-file fileb://${i}.zip \
     #     --role $LAMBDA_ROLE_ARN \
     #     --handler ${module_name}.lambda_handler \
     #     --runtime python3.6 \
@@ -36,7 +36,7 @@ do
         --function-name ${LAMBDA}_${i} \
         --description "${LAMBDA} ${i} Intent Handler" \
         --timeout 300 \
-        --zip-file fileb://Jasper_${i}.zip \
+        --zip-file fileb://${i}.zip \
         --role $LAMBDA_ROLE_ARN \
         --handler ${module_name}.lambda_handler \
         --runtime python3.6 \

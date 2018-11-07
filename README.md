@@ -1,4 +1,4 @@
-## Amazon Lex AI Jasper Bot
+## Amazon Lex BI Bot
 
 Building a Conversational Business Intelligence Bot with Amazon Lex
 

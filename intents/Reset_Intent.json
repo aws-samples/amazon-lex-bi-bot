@@ -1,8 +1,8 @@
 {
     "name": "Reset_Intent",
-    "description": "Tell Jasper to start over",
+    "description": "Tell BIBot to start over",
     "sampleUtterances": [
-      "Forget {venue_city} Jasper", 
+      "Forget {venue_city} BIBot", 
       "Forget about {venue_state}", 
       "Reset {event_month}", 
       "Clear {venue_name}", 

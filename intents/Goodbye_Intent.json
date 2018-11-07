@@ -1,6 +1,6 @@
 {
         "name": "Goodbye_Intent",
-        "description": "Let Jasper know you're done",
+        "description": "Let BIBot know you're done",
         "conclusionStatement": {
           "messages": [
             {
@@ -24,7 +24,7 @@
           "catch you later",
           "catch ya later",
           "cool thanks",
-          "good job jasper",
+          "good job",
           "i'm done",
           "i'm finished",
           "ok thank you",
@@ -33,7 +33,6 @@
           "thanks",
           "thanks bro",
           "thanks dude",
-          "thanks jasper",
           "you're the best",
           "see ya",
           "see you later"

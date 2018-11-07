@@ -1,6 +1,6 @@
 {
         "name": "Hello_Intent",
-        "description": "Say hey to Jasper",
+        "description": "Say hello to BIBot",
         "conclusionStatement": {
           "messages": [
             {
@@ -18,7 +18,6 @@
         },
         "sampleUtterances": [
           "hello",
-          "hello Jasper",
           "hello there",
           "bro",
           "dude",
@@ -28,12 +27,9 @@
           "hey man",
           "hey there",
           "hi",
-          "hi Jasper",
           "hi there",
-          "Jasper",
+          "BIBot",
           "yo",
-          "yo dude",
-          "yo Jasper",
           "you there"
         ],
         "slots": [

@@ -12,21 +12,21 @@
 
 import logging
 import json
-import jasper_config as jasper
-import jasper_helpers as helpers
-import jasper_userexits as userexits
+import bibot_config as bibot
+import bibot_helpers as helpers
+import bibot_userexits as userexits
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 
 def lambda_handler(event, context):
-    logger.debug('<<Jasper>> Lex event info = ' + json.dumps(event))
+    logger.debug('<<BIBot>> Lex event info = ' + json.dumps(event))
 
     session_attributes = event['sessionAttributes']
-    logger.debug('<<Jasper>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
+    logger.debug('<<BIBot>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
 
-    config_error = helpers.get_jasper_config()
+    config_error = helpers.get_bibot_config()
     if config_error is not None:
         return helpers.close(session_attributes, 'Fulfilled',
             {'contentType': 'PlainText', 'content': config_error})   
@@ -50,7 +50,7 @@ def goodbye_intent_handler(intent_request, session_attributes):
     elif askCount == 5: response_string = 'Really?'
     else: response_string = 'Ok'
 
-    slot_values = {key: None for key in jasper.SLOT_CONFIG}
+    slot_values = {key: None for key in bibot.SLOT_CONFIG}
     helpers.remember_slot_values(slot_values, session_attributes)
 
     return helpers.close(session_attributes, 'Fulfilled', {'contentType': 'PlainText','content': response_string})   

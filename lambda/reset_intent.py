@@ -13,9 +13,9 @@
 import time
 import logging
 import json
-import jasper_config as jasper
-import jasper_helpers as helpers
-import jasper_userexits as userexits
+import bibot_config as bibot
+import bibot_helpers as helpers
+import bibot_userexits as userexits
 
 #
 # See additional configuration parameters at bottom 
@@ -26,12 +26,12 @@ logger.setLevel(logging.DEBUG)
 
 
 def lambda_handler(event, context):
-    logger.debug('<<Jasper>> Lex event info = ' + json.dumps(event))
+    logger.debug('<<BIBot>> Lex event info = ' + json.dumps(event))
 
     session_attributes = event['sessionAttributes']
-    logger.debug('<<Jasper>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
+    logger.debug('<<BIBot>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
 
-    config_error = helpers.get_jasper_config()
+    config_error = helpers.get_bibot_config()
     if config_error is not None:
         return helpers.close(session_attributes, 'Fulfilled',
             {'contentType': 'PlainText', 'content': config_error})   
@@ -42,7 +42,7 @@ def lambda_handler(event, context):
 def reset_intent_handler(intent_request, session_attributes):
     session_attributes['greetingCount'] = '1'
     session_attributes['finishedCount'] = '0'
-    # don't alter session_attributes['lastIntent'], let Jasper remember the last used intent
+    # don't alter session_attributes['lastIntent'], let BIBot remember the last used intent
 
     # Retrieve "remembered" slot values from session attributes
     slot_values = helpers.get_remembered_slot_values(None, session_attributes)
@@ -53,7 +53,7 @@ def reset_intent_handler(intent_request, session_attributes):
     slots_to_reset = helpers.get_slot_values(None, intent_request)
 
     # check to see if any remembered slots need forgetting
-    for key,config in jasper.SLOT_CONFIG.items():
+    for key,config in bibot.SLOT_CONFIG.items():
         if key == 'dimension':    # see below
             continue
         if config.get('remember', False):
@@ -61,7 +61,7 @@ def reset_intent_handler(intent_request, session_attributes):
                 if slot_values.get(key):
                     value = userexits.post_process_dimension_output(key, slot_values.get(key))
                     dimensions_reset += ' {}'.format(value.title())
-                    logger.debug('<<Jasper>> reset_intent_handler() - forgetting slot %s value %s', key, slot_values[key])
+                    logger.debug('<<BIBot>> reset_intent_handler() - forgetting slot %s value %s', key, slot_values[key])
                     slot_values[key] = None
                 else:
                     # message = "I wasn't remembering {} - {} anyway.".format(key, slots_to_reset.get(key))
@@ -70,17 +70,17 @@ def reset_intent_handler(intent_request, session_attributes):
 
     # check for special case, where the ask is to forget the dimension by name
     dimension = slots_to_reset.get('dimension')
-    if dimension and jasper.DIMENSIONS.get(dimension):
-        slot_key = jasper.DIMENSIONS[dimension].get('slot')
+    if dimension and bibot.DIMENSIONS.get(dimension):
+        slot_key = bibot.DIMENSIONS[dimension].get('slot')
         if slot_values.get(slot_key):
-            logger.debug('<<Jasper>> reset_intent_handler() - forgetting %s (%s)', dimension, slot_values[slot_key])
+            logger.debug('<<BIBot>> reset_intent_handler() - forgetting %s (%s)', dimension, slot_values[slot_key])
             value = userexits.post_process_dimension_output(dimension, slot_values[slot_key])
             dimensions_reset += ' {}'.format(value).title()
-            logger.debug('<<Jasper>> reset_intent_handler() - forgetting dimension %s slot_key %s value %s', dimension, slot_key, slot_values[slot_key])
+            logger.debug('<<BIBot>> reset_intent_handler() - forgetting dimension %s slot_key %s value %s', dimension, slot_key, slot_values[slot_key])
             slot_values[slot_key] = None
 
     if dimensions_reset == '':
-        slot_values = {key: None for key in jasper.SLOT_CONFIG}
+        slot_values = {key: None for key in bibot.SLOT_CONFIG}
         dimensions_reset = 'everything'
     
     helpers.remember_slot_values(slot_values, session_attributes)

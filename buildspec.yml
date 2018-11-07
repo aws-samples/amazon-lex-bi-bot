@@ -8,16 +8,16 @@ phases:
     commands:
       - echo Build started on `date`
       - cd lambda
-      - python ../zip.py ../Jasper_Count_Intent.zip count_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Top_Intent.zip top_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Compare_Intent.zip compare_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Refresh_Intent.zip refresh_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Reset_Intent.zip reset_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Hello_Intent.zip hello_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Goodbye_Intent.zip goodbye_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py
-      - python ../zip.py ../Jasper_Switch_Intent.zip switch_intent.py jasper_config.py jasper_helpers.py jasper_userexits.py count_intent.py top_intent.py
+      - python ../zip.py ../Count_Intent.zip count_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Top_Intent.zip top_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Compare_Intent.zip compare_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Refresh_Intent.zip refresh_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Reset_Intent.zip reset_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Hello_Intent.zip hello_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Goodbye_Intent.zip goodbye_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py
+      - python ../zip.py ../Switch_Intent.zip switch_intent.py bibot_config.py bibot_helpers.py bibot_userexits.py count_intent.py top_intent.py
       - cd ..
-      - ls -l Jasper*.zip
+      - ls -l *.zip
       - bash delete.sh
       - bash build-db.sh
       - bash build-bot.sh

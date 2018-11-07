@@ -23,7 +23,7 @@ logger.setLevel(logging.DEBUG)
 
 # adjust dimension values as necessary prior to inserting into where clause
 def pre_process_query_value(key, value):
-    logger.debug('<<Jasper>> pre_process_query_value(%s, %s)', key, value)
+    logger.debug('<<BIBot>> pre_process_query_value(%s, %s)', key, value)
     value = value.replace("'", "''")    # don't allow any 's in WHERE clause
     if key == 'event_month':
         value = value[0:3]
@@ -34,7 +34,7 @@ def pre_process_query_value(key, value):
     elif key == 'venue_state':
         value = US_STATES.get(value.lower(), value)
 
-    logger.debug('<<Jasper>> pre_process_query_value() - returning key=%s, value=%s', key, value)
+    logger.debug('<<BIBot>> pre_process_query_value() - returning key=%s, value=%s', key, value)
        
     return value
 
@@ -43,17 +43,17 @@ def pre_process_query_value(key, value):
 def post_process_slot_value(key, value):
     if key == 'venue_state':
         value = US_STATES.get(value.lower(), value)
-        logger.debug('<<Jasper>> post_process_slot_value() - returning key=%s, value=%s', key, value)
+        logger.debug('<<BIBot>> post_process_slot_value() - returning key=%s, value=%s', key, value)
     return value
 
 
 def post_process_dimension_output(key, value):
-    logger.debug('<<Jasper>> post_process_dimension_output(%s, %s)', key, value)
+    logger.debug('<<BIBot>> post_process_dimension_output(%s, %s)', key, value)
     if key == 'states':
         value = get_state_name(value)
     elif key == 'months':
         value = get_month_name(value)
-    logger.debug('<<Jasper>> post_process_dimension_output() - returning key=%s, value=%s', key, value)
+    logger.debug('<<BIBot>> post_process_dimension_output() - returning key=%s, value=%s', key, value)
     return value
 
 
