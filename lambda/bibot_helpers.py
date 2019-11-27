@@ -62,10 +62,10 @@ def execute_athena_query(query_string):
     query_execution_id = response['QueryExecutionId']
 
     status = 'RUNNING'
-    while (status == 'RUNNING'):
+    while (status == 'RUNNING' or status == 'QUEUED'):
         response = athena.get_query_execution(QueryExecutionId=query_execution_id)
         status = response['QueryExecution']['Status']['State']
-        if (status == 'RUNNING'):
+        if (status == 'RUNNING' or status == 'QUEUED'):
             #logger.debug('<<BIBot>> query status = ' + status + ': sleep 200ms') 
             time.sleep(0.200)
 
