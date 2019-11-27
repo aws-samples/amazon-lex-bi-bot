@@ -27,6 +27,10 @@ def lambda_handler(event, context):
     logger.debug('<<BIBot>> Lex event info = ' + json.dumps(event))
 
     session_attributes = event['sessionAttributes']
+
+    if session_attributes is None:
+        session_attributes = {}
+
     logger.debug('<<BIBot>> lambda_handler: session_attributes = ' + json.dumps(session_attributes))
 
     return hello_intent_handler(event, session_attributes)
