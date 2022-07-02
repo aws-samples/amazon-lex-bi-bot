@@ -16,7 +16,7 @@
         }, 
         {
             "intentVersion": "$LATEST", 
-	    "intentName": "Count_Intent"
+	          "intentName": "Count_Intent"
         }, 
         {
             "intentVersion": "$LATEST", 
@@ -30,6 +30,10 @@
             "intentVersion": "$LATEST", 
             "intentName": "Refresh_Intent"
         }, 
+        {
+          "intentVersion":"$LATEST",
+          "intentName":"ProductQuery_Intent"
+        },
         {
             "intentVersion": "$LATEST", 
             "intentName": "Goodbye_Intent"
