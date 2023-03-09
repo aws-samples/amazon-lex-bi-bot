@@ -1,0 +1,105 @@
+{
+    "metadata": {
+      "schemaVersion": "1.0",
+      "importType": "LEX",
+      "importFormat": "JSON"
+    },
+    "resource": {
+      "name": "InternationalPlan",
+      "version": "1",
+      "intents": [
+        {
+          "name": "ProductQuery_Intent",
+          "version": "2",
+          "fulfillmentActivity": {
+            "codeHook": {
+              "uri": "",
+              "messageVersion": "1.0"
+            },
+            "type": "CodeHook"
+          },
+          "sampleUtterances": [
+              "What type of {product} do you have",
+              "how many {product}",
+              "{product}",
+              "How many types of {milk} products are there?",
+              "{milk} products",
+              "{milk}"
+            ],
+          "slots": [
+            {
+              "sampleUtterances": [],
+              "slotType": "product",
+              "slotConstraint": "Required",
+              "valueElicitationPrompt": {
+                "messages": [
+                  {
+                    "contentType": "PlainText",
+                    "content": "We sell milk and some kitchen masalas also. We provide Real pure nutritious milk delivered at your doorstep."
+                  }
+                ],
+                "maxAttempts": 2
+              },
+              "priority": 1,
+              "name": "product"
+            },
+            {
+              "sampleUtterances": [
+                  "milk bottle ​{milk}",
+                  "milk ​{milk}"​
+              ],
+              "slotType": "milk",
+              "slotConstraint": "Required",
+              "valueElicitationPrompt": {
+                "messages": [
+                  {
+                    "contentType": "PlainText",
+                    "content": "We provide full cream malaidaar , un-homogenised milk. Its available in three packings 5,10 litre packets and 2 litre bottle"
+                  }
+                ],
+                "maxAttempts": 2
+              },
+              "priority": 1,
+              "name": "milk"
+            }
+          ],      
+      "slotTypes": [
+        {
+          "description": "milk products",
+          "name": "milk",
+          "version": "1",
+          "enumerationValues": [
+            {
+              "value": "milk",
+              "synonyms": ["milk","milk types"]
+            },
+            {
+              "value": "basic",
+              "synonyms": []
+            }
+          ],
+          "valueSelectionStrategy": "TOP_RESOLUTION"
+        },
+        {
+          "description": "all products",
+          "name": "product",
+          "version": "1",
+          "enumerationValues": [
+            {
+              "value": "product",
+              "synonyms": ["product","products","how many products","all products"]
+            },
+            {
+              "value": "basic",
+              "synonyms": []
+            }
+          ],
+          "valueSelectionStrategy": "TOP_RESOLUTION"
+        }    
+  
+      ]
+    }
+    ]
+    }}
+  
+  
