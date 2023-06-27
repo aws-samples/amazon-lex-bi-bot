@@ -29,7 +29,7 @@ do
     #     --zip-file fileb://${i}.zip \
     #     --role $LAMBDA_ROLE_ARN \
     #     --handler ${module_name}.lambda_handler \
-    #     --runtime python3.6 \
+    #     --runtime python3.9 \
     #     --environment "Variables={ATHENA_DB=$ATHENA_DB,ATHENA_OUTPUT_LOCATION=$ATHENA_OUTPUT_LOCATION}" 
 
     aws lambda create-function \
@@ -39,7 +39,7 @@ do
         --zip-file fileb://${i}.zip \
         --role $LAMBDA_ROLE_ARN \
         --handler ${module_name}.lambda_handler \
-        --runtime python3.6 \
+        --runtime python3.9 \
 	--environment "Variables={ATHENA_DB=$ATHENA_DB,ATHENA_OUTPUT_LOCATION=$ATHENA_OUTPUT_LOCATION}" \
         >/dev/null
 
