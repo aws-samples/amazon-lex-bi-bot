@@ -27,7 +27,7 @@ import bibot_userexits as userexits
 
 COUNT_SELECT = "SELECT SUM(ie.revenue) FROM invoice_events ie "
 COUNT_JOIN = " "
-COUNT_WHERE = " WHERE {} = {} AND {} = {} AND {} = {}"   
+COUNT_WHERE = " WHERE {} = '{}' AND {} = '{}' AND {} = '{}'"   
 COUNT_PHRASE = 'Dollars generated'
 
 logger = logging.getLogger()
