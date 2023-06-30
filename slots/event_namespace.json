@@ -1,0 +1,23 @@
+{
+    "name": "event_namespace",
+    "description": "Names of events in  database",
+    "valueSelectionStrategy": "TOP_RESOLUTION", 
+    "enumerationValues": [
+        {
+            "synonyms": [
+                "FDR"
+            ], 
+            "value": "FDR.prod"
+        }, 
+        {
+            "synonyms": [
+                "Invoices",
+                "Invoice", 
+                "InvoiceCreated", 
+                "Anniversary Invoices",
+                "Anniversary Invoice"
+            ], 
+            "value": "Invoice.prod"
+        }
+ ]
+}

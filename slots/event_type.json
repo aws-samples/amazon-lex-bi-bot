@@ -1,0 +1,38 @@
+{
+    "name": "event_type",
+    "description": "Type of events in database",
+    "valueSelectionStrategy": "TOP_RESOLUTION", 
+    "enumerationValues": [
+        {
+            "synonyms": [
+                "start",
+                "started",
+                "began"
+            ], 
+            "value": "begin"
+        }, 
+        {
+            "synonyms": [
+                "failed",
+                "failure"
+            ], 
+            "value": "fail"
+        },
+        {
+            "synonyms": [
+                "skiped"
+            ], 
+            "value": "skip"
+        }, 
+        {
+            "synonyms": [
+                "completed",
+                "completion",
+                "finished",
+                "success"
+            ], 
+            "value": "complete"
+        }
+        
+ ]
+}

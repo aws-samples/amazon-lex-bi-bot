@@ -5,6 +5,36 @@
     "enumerationValues": [
         {
             "synonyms": [
+                "namespace"
+            ], 
+            "value": "namespaces"
+        }, 
+        {
+            "synonyms": [
+                "type"
+            ], 
+            "value": "types"
+        }, 
+        {
+            "synonyms": [
+                "invoice"
+            ], 
+            "value": "invoices"
+        }, 
+        {
+            "synonyms": [
+                "account"
+            ], 
+            "value": "accounts"
+        }, 
+        {
+            "synonyms": [
+                "bill"
+            ], 
+            "value": "bills"
+        }, 
+        {
+            "synonyms": [
                 "year"
             ], 
             "value": "years"
@@ -20,40 +50,6 @@
                 "day"
             ], 
             "value": "days"
-        }, 
-        {
-            "synonyms": [
-                "city"
-            ], 
-            "value": "cities"
-        }, 
-        {
-            "synonyms": [
-                "stadiums", 
-                "locations", 
-                "venue"
-            ], 
-            "value": "venues"
-        }, 
-        {
-            "synonyms": [
-                "category"
-            ], 
-            "value": "categories"
-        }, 
-        {
-            "synonyms": [
-                "shows", 
-                "concerts", 
-                "event"
-            ], 
-            "value": "events"
-        }, 
-        {
-            "synonyms": [
-                "state"
-            ], 
-            "value": "states"
         }
     ]
 }
