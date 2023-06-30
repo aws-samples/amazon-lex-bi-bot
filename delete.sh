@@ -17,12 +17,6 @@
 
 SLEEP=2
 
-# Delete TICKIT database if it exists
-if aws glue get-database --name $ATHENA_DB >xxx 2>&1
-then 
-	echo "Deleting Athena database $ATHENA_DB"
-	aws glue delete-database --name $ATHENA_DB >/dev/null
-fi
 
 # delete the bot if it exists
 echo -n "Checking for existing bot $BOT... " 

@@ -19,7 +19,6 @@ phases:
       - cd ..
       - ls -l *.zip
       - bash delete.sh
-      - bash build-db.sh
       - bash build-bot.sh
   post_build:
     commands:

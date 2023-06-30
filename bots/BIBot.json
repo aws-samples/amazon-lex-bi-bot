@@ -8,19 +8,7 @@
         }, 
         {
             "intentVersion": "$LATEST", 
-            "intentName": "Top_Intent"
-        }, 
-        {
-            "intentVersion": "$LATEST", 
-            "intentName": "Compare_Intent"
-        }, 
-        {
-            "intentVersion": "$LATEST", 
-	    "intentName": "Count_Intent"
-        }, 
-        {
-            "intentVersion": "$LATEST", 
-            "intentName": "Switch_Intent"
+	          "intentName": "Count_Intent"
         }, 
         {
             "intentVersion": "$LATEST", 
