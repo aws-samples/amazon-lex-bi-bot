@@ -46,58 +46,6 @@
             "priority": 1, 
             "sampleUtterances": [], 
             "description": "event_year"
-        }, 
-
-        {
-            "slotType": "AMAZON.Year", 
-            "name": "event_year", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "The year of the event", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 1, 
-            "sampleUtterances": [], 
-            "description": "event_year"
-        }, 
-        {
-            "slotType": "AMAZON.Month", 
-            "name": "event_month", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "The month of the event", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 1, 
-            "sampleUtterances": [], 
-            "description": "event_month"
-        }, 
-        {
-            "slotType": "AMAZON.Day", 
-            "name": "event_day", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "The day of the event", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 1, 
-            "sampleUtterances": [], 
-            "description": "event_day"
-        } 
+        }
     ]
 }
