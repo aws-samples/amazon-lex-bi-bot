@@ -30,14 +30,8 @@ logger.setLevel(logging.DEBUG)
 def pre_process_query_value(key, value):
     logger.debug('<<BIBot>> pre_process_query_value(%s, %s)', key, value)
     value = value.replace("'", "''")    # don't allow any 's in WHERE clause
-    if key == 'event_month':
-        value = value[0:3]
-    elif key == 'venue_name':
-        value = value.lower().replace('theater', 'theatre')
-        value = value.lower().replace('u. s.', 'us')
-        value = value.lower().replace('u.s.', 'us')
-    elif key == 'venue_state':
-        value = US_STATES.get(value.lower(), value)
+    if key == 'event_date':
+        value = (value[0:4], value[5:7], value[8:10]) #2023-07-01
 
     logger.debug('<<BIBot>> pre_process_query_value() - returning key=%s, value=%s', key, value)
        
@@ -46,6 +40,7 @@ def pre_process_query_value(key, value):
 
 # adjust slot values as necessary after reading from intent slots
 def post_process_slot_value(key, value):
+    value = value.replace("'", "''")    # don't allow any 's in WHERE clause
     if key == 'venue_state':
         value = US_STATES.get(value.lower(), value)
         logger.debug('<<BIBot>> post_process_slot_value() - returning key=%s, value=%s', key, value)

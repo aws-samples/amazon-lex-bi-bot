@@ -18,37 +18,52 @@
 ORIGINAL_VALUE = 0
 TOP_RESOLUTION = 1
 
+
 SLOT_CONFIG = {
-    'event_name':       {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find an event called "{}".'},
-    'event_month':      {'type': ORIGINAL_VALUE, 'remember': True},
-    'venue_name':       {'type': ORIGINAL_VALUE, 'remember': True},
-    'venue_city':       {'type': ORIGINAL_VALUE, 'remember': True},
-    'venue_state':      {'type': ORIGINAL_VALUE, 'remember': True},
-    'cat_desc':         {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find a category called "{}".'},
-    'count':            {'type': ORIGINAL_VALUE, 'remember': True},
-    'dimension':        {'type': ORIGINAL_VALUE, 'remember': True},
-    'one_event':        {'type': TOP_RESOLUTION, 'remember': False, 'error': 'I couldn\'t find an event called "{}".'},
-    'another_event':    {'type': TOP_RESOLUTION, 'remember': False, 'error': 'I couldn\'t find an event called "{}".'},
-    'one_venue':        {'type': ORIGINAL_VALUE, 'remember': False},
-    'another_venue':    {'type': ORIGINAL_VALUE, 'remember': False},
-    'one_month':        {'type': ORIGINAL_VALUE, 'remember': False},
-    'another_month':    {'type': ORIGINAL_VALUE, 'remember': False},
-    'one_city':         {'type': ORIGINAL_VALUE, 'remember': False},
-    'another_city':     {'type': ORIGINAL_VALUE, 'remember': False},
-    'one_state':        {'type': ORIGINAL_VALUE, 'remember': False},
-    'another_state':    {'type': ORIGINAL_VALUE, 'remember': False},
-    'one_category':     {'type': TOP_RESOLUTION, 'remember': False,  'error': 'I couldn\'t find a category called "{}".'},
-    'another_category': {'type': TOP_RESOLUTION, 'remember': False,  'error': 'I couldn\'t find a category called "{}".'}
+    # custom slot : TOP_res
+    'event_namespace': {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find an namespace called "{}".'},
+    'event_type': {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find a type called "{}".'},
+    'event_invoice': {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find an invoice called "{}".'},
+    'event_account': {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find an account called "{}".'},
+    'event_revenue': {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find a revenue called "{}".'},
+    'event_bill': {'type': TOP_RESOLUTION, 'remember': True,  'error': 'I couldn\'t find a bill called "{}".'},
+    'event_year': {'type': ORIGINAL_VALUE, 'remember': True},
+    'event_month': {'type': ORIGINAL_VALUE, 'remember': True},
+    'event_day': {'type': ORIGINAL_VALUE, 'remember': True},
+    'event_date': {'type': ORIGINAL_VALUE, 'remember': True},
+    'count': {'type': ORIGINAL_VALUE, 'remember': True},
+    'dimension': {'type': ORIGINAL_VALUE, 'remember': True},
 }
 
 DIMENSIONS = {
-    'events':     {'slot': 'event_name',  'column': 'e.event_name',  'singular': 'event'},
-    'months':     {'slot': 'event_month', 'column': 'd.month',       'singular': 'month'},
-    'venues':     {'slot': 'venue_name',  'column': 'v.venue_name',  'singular': 'venue'},
-    'cities':     {'slot': 'venue_city',  'column': 'v.venue_city',  'singular': 'city'},
-    'states':     {'slot': 'venue_state', 'column': 'v.venue_state', 'singular': 'state'},
-    'categories': {'slot': 'cat_desc',    'column': 'c.cat_desc',    'singular': 'category'}
+    'namespaces': {'slot': 'event_namespace', 'column': 'ie.namespace', 'singular': 'namespace'},
+    'types': {'slot': 'event_type', 'column': 'ie.type', 'singular': 'type'},
+    'invoices': {'slot': 'event_invoice', 'column': 'ie.invoice', 'singular': 'invoice'},
+    'accounts': {'slot': 'event_account', 'column': 'ie.account', 'singular': 'account'},
+    'bills': {'slot': 'event_bill', 'column': 'ie.bill', 'singular': 'bill'},
+    'revenue': {'slot': 'event_revenue', 'column': 'ie.column', 'singular': 'revenue'},
+    'years': {'slot': 'event_year', 'column': 'ie.year', 'singular': 'year'},
+    'months': {'slot': 'event_month', 'column': 'ie.month', 'singular': 'month'},
+    'days': {'slot': 'event_day', 'column': 'ie.day', 'singular': 'day'}
 }
+
+
+
+# producer, namespace, type, invoice, account, bill, revenue, year, month, day
+
+# How many "accounts" are {skip}.
+
+# How many {Namespace - Invoicing.prod} are there on Jan1 - Namespace: ->  
+# How many {Namespace - FDR.prod} are there on Jan1 - Namespace: -> 
+
+# What is the {revenue} for {dimension}-{slot}
+# What is the revenue for invoice-{01238021938} - SLOT
+# What is the revenue for account-{01238021938} - SLOT
+
+# Column - Dimension, Row - Slot
+
+# Example of a question with column/row
+# 
 
 
 class SlotError(Exception):

@@ -23,10 +23,12 @@ import bibot_helpers as helpers
 import bibot_userexits as userexits
 
 # SELECT statement for Count query
-COUNT_SELECT = "SELECT SUM(s.qty) FROM sales s, event e, venue v, category c, date_dim d "
-COUNT_JOIN = " WHERE e.event_id = s.event_id AND v.venue_id = e.venue_id AND c.cat_id = e.cat_id AND d.date_id = e.date_id "
-COUNT_WHERE = " AND LOWER({}) LIKE LOWER('%{}%') "   
-COUNT_PHRASE = 'tickets sold'
+
+
+COUNT_SELECT = "SELECT SUM(ie.revenue) FROM invoice_events ie "
+COUNT_JOIN = " "
+COUNT_WHERE = " WHERE {} = {} AND {} = {} AND {} = {}"   
+COUNT_PHRASE = 'Dollars generated'
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -77,12 +79,12 @@ def count_intent_handler(intent_request, session_attributes):
     # build and execute query
     select_clause = COUNT_SELECT
     where_clause = COUNT_JOIN
-    for dimension in bibot.DIMENSIONS:
-        slot_key = bibot.DIMENSIONS.get(dimension).get('slot')
-        if slot_values[slot_key] is not None:
-            value = userexits.pre_process_query_value(slot_key, slot_values[slot_key])
-            where_clause += COUNT_WHERE.format(bibot.DIMENSIONS.get(dimension).get('column'), value)
+
+    slot_key = 'event_date'
+    year, month, day = userexits.pre_process_query_value(slot_key, slot_values[slot_key])
     
+    where_clause += COUNT_WHERE.format('year', year, 'month', month, 'day', day)
+
     query_string = select_clause + where_clause
     
     response = helpers.execute_athena_query(query_string)
@@ -97,23 +99,10 @@ def count_intent_handler(intent_request, session_attributes):
 
     # build response string
     if count == 0:
-        response_string = 'There were no {}'.format(COUNT_PHRASE)
+        response_string = 'There was no revenue generated'.format(COUNT_PHRASE)
     else:
         response_string = 'There were {} {}'.format(count, COUNT_PHRASE)
 
-    # add the English versions of the WHERE clauses
-    for dimension in bibot.DIMENSIONS:
-        slot_key = bibot.DIMENSIONS[dimension].get('slot')
-        logger.debug('<<BIBot>> pre top5_formatter[%s] = %s', slot_key, slot_values.get(slot_key))
-        if slot_values.get(slot_key) is not None:
-            # the DIMENSION_FORMATTERS perform a post-process functions and then format the output
-            # Example:  {... 'venue_state': {'format': ' in the state of {}',  'function': get_state_name}, ...}
-            if userexits.DIMENSION_FORMATTERS.get(slot_key) is not None:
-                output_text = userexits.DIMENSION_FORMATTERS[slot_key]['function'](slot_values.get(slot_key))
-                response_string += ' ' + userexits.DIMENSION_FORMATTERS[slot_key]['format'].lower().format(output_text)
-                logger.debug('<<BIBot>> dimension_formatter[%s] = %s', slot_key, output_text)
-
-    response_string += '.'
+    response_string += ' in {}'.format(slot_values[slot_key])
 
     return helpers.close(session_attributes, 'Fulfilled', {'contentType': 'PlainText','content': response_string})   
-
