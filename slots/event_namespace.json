@@ -15,9 +15,10 @@
                 "Invoice", 
                 "InvoiceCreated", 
                 "Anniversary Invoices",
-                "Anniversary Invoice"
+                "Anniversary Invoice", 
+                "Invoicing"
             ], 
-            "value": "Invoice.prod"
+            "value": "Invoicing.prod"
         }
  ]
 }
