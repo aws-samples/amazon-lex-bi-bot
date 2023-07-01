@@ -118,7 +118,8 @@ def top_intent_handler(intent_request, session_attributes):
     except KeyError:
         return helpers.close(session_attributes, 'Fulfilled',
             {'contentType': 'PlainText', 'content': "Sorry, I don't know what you mean by " + slot_values['dimension']})
-            
+    
+    where_clause = ""
 
     # add WHERE clause for each non empty slot
     # for dimension in bibot.DIMENSIONS:
