@@ -18,7 +18,6 @@
   },
   "sampleUtterances": [
     "How much money was generated for {dimension} {entity_id}",
-    "How much money was generated in {event_date} for {dimension} {entity_id}",
     "How much money was generated in {event_date}",
     "Total dollars in {event_date}",
     "How many dollars were generated for {dimension} {entity_id} on {event_date}",
