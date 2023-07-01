@@ -23,10 +23,9 @@ import bibot_helpers as helpers
 import bibot_userexits as userexits
 
 # SELECT statement for Top query
-TOP_SELECT  = "SELECT {}, SUM(s.amount) ticket_sales FROM sales s, event e, venue v, category c, date_dim d  "
-TOP_JOIN    = " WHERE e.event_id = s.event_id AND v.venue_id = e.venue_id AND c.cat_id = e.cat_id AND d.date_id = e.date_id "
-TOP_WHERE   = " AND LOWER({}) LIKE LOWER('%{}%') " 
-TOP_ORDERBY = " GROUP BY {} ORDER BY ticket_sales desc" 
+TOP_SELECT  = "SELECT {}, SUM(ie.revenue) total_revenue FROM invoice_events ie  "
+TOP_WHERE   = " WHERE year = {} AND month = {} AND day = {}" 
+TOP_ORDERBY = " GROUP BY {} ORDER BY total_revenue desc" 
 TOP_DEFAULT_COUNT = '5'
 
 logger = logging.getLogger()
@@ -120,15 +119,17 @@ def top_intent_handler(intent_request, session_attributes):
         return helpers.close(session_attributes, 'Fulfilled',
             {'contentType': 'PlainText', 'content': "Sorry, I don't know what you mean by " + slot_values['dimension']})
             
-    # add JOIN clauses 
-    where_clause = TOP_JOIN
 
     # add WHERE clause for each non empty slot
-    for dimension in bibot.DIMENSIONS:
-        slot_key = bibot.DIMENSIONS.get(dimension).get('slot')
-        if slot_values[slot_key] is not None:
-            value = userexits.pre_process_query_value(slot_key, slot_values[slot_key])
-            where_clause += TOP_WHERE.format(bibot.DIMENSIONS.get(dimension).get('column'), value)
+    # for dimension in bibot.DIMENSIONS:
+    #     slot_key = bibot.DIMENSIONS.get(dimension).get('slot')
+    #     if slot_values[slot_key] is not None:
+    #         value = userexits.pre_process_query_value(slot_key, slot_values[slot_key])
+    #         where_clause += TOP_WHERE.format(bibot.DIMENSIONS.get(dimension).get('column'), value)
+    slot_key = 'event_date'
+    if slot_values[slot_key] is not None:
+        year, month, day = userexits.pre_process_query_value(slot_key, slot_values[slot_key])
+        where_clause += TOP_WHERE.format(year, month, day)
 
     try:
         # the GROUP BY is by dimension, and the ORDER by is the aggregated fact
@@ -173,18 +174,18 @@ def top_intent_handler(intent_request, session_attributes):
     else:
         response_string += 'The top ' + str(result_count) + ' ' + slot_values.get('dimension')
   
-    # add the English versions of the WHERE clauses
-    for dimension in bibot.DIMENSIONS:
-        slot_key = bibot.DIMENSIONS[dimension].get('slot')
-        logger.debug('<<BIBot>> pre top5_formatter[%s] = %s', slot_key, slot_values.get(slot_key))
-        if slot_values.get(slot_key) is not None:
-            # the DIMENSION_FORMATTERS perform a post-process functions and then format the output
-            # Example:  {... 'venue_state': {'format': ' in the state of {}',  'function': get_state_name}, ...}
-            if userexits.DIMENSION_FORMATTERS.get(slot_key) is not None:
-                output_text = userexits.DIMENSION_FORMATTERS[slot_key]['function'](slot_values.get(slot_key))
-                output_text = userexits.DIMENSION_FORMATTERS[slot_key]['format'].lower().format(output_text)
-                response_string += ' ' + output_text
-                logger.debug('<<BIBot>> top5_formatter[%s] = %s', slot_key, output_text)
+    # # add the English versions of the WHERE clauses
+    # for dimension in bibot.DIMENSIONS:
+    #     slot_key = bibot.DIMENSIONS[dimension].get('slot')
+    #     logger.debug('<<BIBot>> pre top5_formatter[%s] = %s', slot_key, slot_values.get(slot_key))
+    #     if slot_values.get(slot_key) is not None:
+    #         # the DIMENSION_FORMATTERS perform a post-process functions and then format the output
+    #         # Example:  {... 'venue_state': {'format': ' in the state of {}',  'function': get_state_name}, ...}
+    #         if userexits.DIMENSION_FORMATTERS.get(slot_key) is not None:
+    #             output_text = userexits.DIMENSION_FORMATTERS[slot_key]['function'](slot_values.get(slot_key))
+    #             output_text = userexits.DIMENSION_FORMATTERS[slot_key]['format'].lower().format(output_text)
+    #             response_string += ' ' + output_text
+    #             logger.debug('<<BIBot>> top5_formatter[%s] = %s', slot_key, output_text)
 
     if result_count == 0:
         pass

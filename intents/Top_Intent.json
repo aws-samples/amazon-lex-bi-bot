@@ -1,24 +1,17 @@
 {
     "name": "Top_Intent", 
-    "description": "Top five sales by dimension",
+    "description": "Top five events by dimension",
     "sampleUtterances": [
-        "What were the top {count} {dimension} for {cat_desc}",
-        "Tell me the top {count} {dimension} in {venue_city} {venue_state}", 
-        "Top {count} {dimension} for {cat_desc}", 
-        "Top {count} {dimension} in {venue_state}", 
-        "Top {count} {dimension} in {venue_city}", 
-        "Top {count} {dimension} at {venue_name}", 
-        "Top {count} {dimension} in {event_month}", 
-        "Top {count} {dimension} for {event_name}", 
-        "Top {count} {dimension}", 
-        "Top {dimension}", 
-        "Top {count}"
+        "Top {count} {dimension} by revenue",
+        "Top {count} {dimension} based on revenue",
+        "Top {count} {dimension} by revenue for {event_date}",
+        "Top {count} {dimension} based on revenue for {event_date}"
     ], 
     "slots": [
         {
             "slotType": "AMAZON.NUMBER", 
             "name": "count", 
-            "slotConstraint": "Optional", 
+            "slotConstraint": "Required", 
             "valueElicitationPrompt": {
                 "maxAttempts": 2, 
                 "messages": [
@@ -34,7 +27,7 @@
         {
             "slotType": "dimensions", 
             "name": "dimension", 
-            "slotConstraint": "Optional", 
+            "slotConstraint": "Required", 
             "valueElicitationPrompt": {
                 "maxAttempts": 2, 
                 "messages": [
@@ -49,102 +42,21 @@
             "sampleUtterances": []
         },
         {
-            "slotType": "event_name", 
-            "name": "event_name", 
+            "slotType": "AMAZON.DATE", 
+            "name": "event_date", 
             "slotConstraint": "Optional", 
             "valueElicitationPrompt": {
                 "maxAttempts": 2, 
                 "messages": [
                     {
-                        "content": "event name", 
+                        "content": "The date of the event", 
                         "contentType": "PlainText"
                     }
                 ]
             }, 
             "priority": 3, 
-            "slotTypeVersion": "$LATEST", 
-            "sampleUtterances": []
-        }, 
-        {
-            "slotType": "AMAZON.Month", 
-            "name": "event_month", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "month", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 4, 
-            "sampleUtterances": []
-        }, 
-        {
-            "slotType": "AMAZON.MusicVenue", 
-            "name": "venue_name", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "venue", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 5, 
-            "sampleUtterances": []
-        }, 
-        {
-            "slotType": "AMAZON.US_CITY", 
-            "name": "venue_city", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "city", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 6, 
-            "sampleUtterances": []
-        }, 
-        {
-            "slotType": "AMAZON.US_STATE", 
-            "name": "venue_state", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "state", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 7, 
-            "sampleUtterances": []
-        }, 
-        {
-            "slotType": "cat_desc", 
-            "name": "cat_desc", 
-            "slotConstraint": "Optional", 
-            "valueElicitationPrompt": {
-                "maxAttempts": 2, 
-                "messages": [
-                    {
-                        "content": "category", 
-                        "contentType": "PlainText"
-                    }
-                ]
-            }, 
-            "priority": 8, 
-            "slotTypeVersion": "$LATEST", 
-            "sampleUtterances": []
+            "sampleUtterances": [], 
+            "description": "event_date"
         }
     ], 
     "conclusionStatement": {
