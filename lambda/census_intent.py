@@ -25,7 +25,7 @@ import bibot_userexits as userexits
 # SELECT statement for Count query
 
 
-SELECT_PHRASE = "SELECT COUNT(*) FROM FROM \"hackathon\".\"invoice_events\" ie"
+SELECT_PHRASE = "SELECT COUNT(*) FROM \"hackathon\".\"invoice_events\" ie"
 WHERE_PHRASE = " WHERE namespace = '{}'"
 DATE_CLAUSE = " AND {} = '{}' AND {} = '{}' AND {} = '{}'"
 ENTITY_CLAUSE = " AND type = '{}'"
@@ -112,6 +112,8 @@ def census_intent_handler(intent_request, session_attributes):
         where_clause += ENTITY_CLAUSE.format(slot_values.get("event_type"))
 
     query_string = select_clause + where_clause
+
+    logger.debug('<<BIBot>> "Query value is: %s' % query_string)
 
     response = helpers.execute_athena_query(query_string)
 
