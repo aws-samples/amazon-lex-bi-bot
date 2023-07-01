@@ -86,6 +86,23 @@
       "priority": 2,
       "slotTypeVersion": "$LATEST",
       "sampleUtterances": []
+    },
+    {
+      "slotType": "AMAZON.AlphaNumeric",
+      "name": "entity_id",
+      "slotConstraint": "Optional",
+      "valueElicitationPrompt": {
+        "maxAttempts": 2,
+        "messages": [
+          {
+            "content": "entity_id",
+            "contentType": "PlainText"
+          }
+        ]
+      },
+      "priority": 2,
+      "slotTypeVersion": "$LATEST",
+      "sampleUtterances": []
     }
   ]
 }
