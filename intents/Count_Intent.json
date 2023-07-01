@@ -74,24 +74,6 @@
       "description": "event_year"
     },
     {
-      "slotType": "entity_id",
-      "name": "entity_id",
-      "slotConstraint": "Optional",
-      "valueElicitationPrompt": {
-        "maxAttempts": 2,
-        "messages": [
-          {
-            "content": "The id of the entity",
-            "contentType": "PlainText"
-          }
-        ]
-      },
-      "priority": 2,
-      "slotTypeVersion": "$LATEST",
-      "sampleUtterances": [],
-      "description": "entity_id"
-    },
-    {
       "slotType": "dimensions",
       "name": "dimension",
       "slotConstraint": "Optional",
