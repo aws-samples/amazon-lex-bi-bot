@@ -20,7 +20,7 @@
         },
         {
           "intentVersion": "$LATEST", 
-          "intentName": "Cencus_Intent"
+          "intentName": "Census_Intent"
         },
         {
             "intentVersion": "$LATEST", 
