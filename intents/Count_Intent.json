@@ -61,6 +61,7 @@
                 ]
             }, 
             "priority": 2, 
+            "slotTypeVersion": "$LATEST", 
             "sampleUtterances": [], 
             "description": "event_namespace"
         }
