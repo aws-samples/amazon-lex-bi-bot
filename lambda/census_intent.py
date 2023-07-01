@@ -117,6 +117,8 @@ def census_intent_handler(intent_request, session_attributes):
 
     response = helpers.execute_athena_query(query_string)
 
+    logger.debug('<<BIBot>> "Response value is: %s' % response)
+
     result = response["ResultSet"]["Rows"][1]["Data"][0]
     if result:
         count = result["VarCharValue"]
