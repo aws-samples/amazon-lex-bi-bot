@@ -203,9 +203,9 @@ def top_intent_handler(intent_request, session_attributes):
                 if counter > 1:
                     response_string += '; and ' if counter == result_count else '; '
                 if result_count > 1:
-                    response_string += str(counter) + ', '
+                    response_string += str(counter) + '. '
                     
-                value = userexits.post_process_dimension_output(slot_values.get('dimension'), item['Data'][0]['VarCharValue'])
+                value = "Id: {} Revenue: {}".format(item['Data'][0]['VarCharValue'], item['Data'][1]['VarCharValue'])
                 response_string += value
     
                 remembered_value = item['Data'][0]['VarCharValue']
