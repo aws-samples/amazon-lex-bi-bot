@@ -1,0 +1,82 @@
+{
+    "name": "Census_Intent",
+    "description": "Recursively query the dataset",
+    "conclusionStatement": {
+      "messages": [
+        {
+          "content": "via code hook",
+          "contentType": "PlainText"
+        }
+      ]
+    },
+    "fulfillmentActivity": {
+      "codeHook": {
+        "messageVersion": "1.0",
+        "uri": "{{lambda-arn}}"
+      },
+      "type": "CodeHook"
+    },
+    "sampleUtterances": [
+      "How much {event_namespace} were created on {event_date}", 
+      "Count of {event_namespace} created on {event_date}",
+      "Count of {event_namespace} events created on {event_date}",
+      "Total {event_namespace} created on {event_date}",
+      "How much {event_namespace} of {event_type} were created on {event_date}", 
+      "Count of {event_namespace} of {event_type} created on {event_date}",
+      "Count of {event_namespace} of {event_type} events created on {event_date}",
+      "Total {event_namespace}  of {event_type} created on {event_date}"
+    ],
+    "slots": [
+      {
+        "slotType": "AMAZON.DATE",
+        "name": "event_date",
+        "slotConstraint": "Optional",
+        "valueElicitationPrompt": {
+          "maxAttempts": 2,
+          "messages": [
+            {
+              "content": "The year of the event",
+              "contentType": "PlainText"
+            }
+          ]
+        },
+        "priority": 2,
+        "sampleUtterances": [],
+        "description": "event_year"
+      },
+      {
+        "slotType": "event_namespace", 
+        "name": "event_namespace", 
+        "slotConstraint": "Required", 
+        "valueElicitationPrompt": {
+            "maxAttempts": 2, 
+            "messages": [
+                {
+                    "content": "The namespace of the event", 
+                    "contentType": "PlainText"
+                }
+            ]
+        }, 
+        "priority": 1, 
+        "sampleUtterances": [], 
+        "description": "event_namespace"
+      },
+      {
+        "slotType": "event_type", 
+        "name": "event_type", 
+        "slotConstraint": "Optional", 
+        "valueElicitationPrompt": {
+            "maxAttempts": 2, 
+            "messages": [
+                {
+                    "content": "The namespace of the event", 
+                    "contentType": "PlainText"
+                }
+            ]
+        }, 
+        "priority": 3, 
+        "sampleUtterances": [], 
+        "description": "event_type"
+      }
+    ]
+  }

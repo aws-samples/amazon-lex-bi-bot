@@ -17,7 +17,11 @@
         {
           "intentVersion": "$LATEST", 
           "intentName": "Top_Intent"
-      },
+        },
+        {
+          "intentVersion": "$LATEST", 
+          "intentName": "Cencus_Intent"
+        },
         {
             "intentVersion": "$LATEST", 
             "intentName": "Refresh_Intent"
