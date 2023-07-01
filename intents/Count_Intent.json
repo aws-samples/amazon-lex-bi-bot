@@ -25,7 +25,7 @@
     "How many dollars were generated in {event_date} for {dimension} {entity_id}",
     "How much revenue was generated for {dimension} {entity_id}",
     "How much revenue was generated in {event_date}",
-    "How much money was generated in {event_date} for {dimension} {entity_id} in {event_date}",
+    "How much money was generated in {event_date} for {dimension} {entity_id}",
     "How much revenue was generated for {dimension} {entity_id} in {event_date}",
     "Total money in {event_date}",
     "How many dollars were generated in {event_date}",
