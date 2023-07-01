@@ -46,6 +46,23 @@
             "priority": 1, 
             "sampleUtterances": [], 
             "description": "event_year"
+        },
+        {
+            "slotType": "event_namespace", 
+            "name": "event_namespace", 
+            "slotConstraint": "Optional", 
+            "valueElicitationPrompt": {
+                "maxAttempts": 2, 
+                "messages": [
+                    {
+                        "content": "The namespace of the event", 
+                        "contentType": "PlainText"
+                    }
+                ]
+            }, 
+            "priority": 2, 
+            "sampleUtterances": [], 
+            "description": "event_namespace"
         }
     ]
 }
