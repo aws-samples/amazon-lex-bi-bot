@@ -88,7 +88,13 @@ def count_intent_handler(intent_request, session_attributes):
     logger.debug('<<BIBot>> "count_intent_handler(): slot_values: %s', slot_values)
 
     # Retrieve "remembered" slot values from session attributes
-    slot_values = helpers.get_remembered_slot_values(slot_values, session_attributes)
+    remembered_slot_values = helpers.get_remembered_slot_values(slot_values, session_attributes)
+
+    remembered_slot_values["dimension"] = slot_values["dimension"]
+    remembered_slot_values["entity_id"] = slot_values["entity_id"]
+
+    slot_values = remembered_slot_values
+    
     logger.debug(
         '<<BIBot>> "count_intent_handler(): slot_values afer get_remembered_slot_values: %s',
         slot_values,

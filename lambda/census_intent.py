@@ -86,7 +86,12 @@ def census_intent_handler(intent_request, session_attributes):
     logger.debug('<<BIBot>> "census_intent_handler(): slot_values: %s', slot_values)
 
     # Retrieve "remembered" slot values from session attributes
-    slot_values = helpers.get_remembered_slot_values(slot_values, session_attributes)
+    remembered_slot_values = helpers.get_remembered_slot_values(slot_values, session_attributes)
+    if remembered_slot_values["event_namespace"] != slot_values["event_namespace"]:
+        remembered_slot_values["event_type"] = slot_values["event_type"]
+
+    slot_values = remembered_slot_values
+
     logger.debug(
         '<<BIBot>> "census_intent_handler(): slot_values afer get_remembered_slot_values: %s',
         slot_values,
