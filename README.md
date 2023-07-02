@@ -1,6 +1,6 @@
 ## Amazon Lex BI Bot
 
-Building a Conversational Business Intelligence Bot with Amazon Lex
+Building a Conversational Business Intelligence Bot with Amazon Lex.
 
 ## License Summary
 
