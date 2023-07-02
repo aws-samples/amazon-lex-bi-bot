@@ -73,6 +73,7 @@ def census_intent_handler(intent_request, session_attributes):
 
     # Retrieve slot values from the current request
     slot_values = session_attributes.get("slot_values")
+    logger.debug('<<BIBot>> "slot_values value is: %s' % slot_values)
 
     try:
         slot_values = helpers.get_slot_values(slot_values, intent_request)
@@ -91,6 +92,8 @@ def census_intent_handler(intent_request, session_attributes):
         remembered_slot_values["event_type"] = slot_values["event_type"]
 
     slot_values = remembered_slot_values
+
+    logger.debug('<<BIBot>> "updated slot_values value is: %s' % slot_values)
 
     logger.debug(
         '<<BIBot>> "census_intent_handler(): slot_values afer get_remembered_slot_values: %s',
